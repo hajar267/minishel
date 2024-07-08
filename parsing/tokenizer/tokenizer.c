@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:54:07 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/01 23:55:53 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/08 01:11:28 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_strdup(char *s)
 	return (str);
 }
 
-int	ft_strlen(char *str)
+int	ft_strlen(const char *str)
 {
 	int i =0;
 	while(str[i])
@@ -45,7 +45,11 @@ int	ft_strlen(char *str)
 t_token	*lst_new(t_token *var, int len)
 {
 	t_token	*node = malloc(sizeof(t_token));
+	if (!node)
+		return (NULL);
 	node->content = malloc(len + 1);
+	if (!node->content)
+		return (NULL);
 	node->next = NULL;
 	node->prev = NULL;
 	var->j=0;
@@ -109,6 +113,8 @@ void convert_it(char *line, t_token **head_ref)
     while (token)
     {
         current = malloc(sizeof(t_token));
+		if (!current)
+			return ;
         current->content = ft_strdup(token->content);
         current->next = NULL;
 		current->prev = NULL;
@@ -134,29 +140,28 @@ void	read_line(void)
 {
 	while(true)
 	{
-    char* line = readline("my_bash-4.5$ ");
-    if (!line)
-		return ;
-    t_token *tok = NULL;
-	t_cmds	*commands =NULL;
-    convert_it(line, &tok);
-	free(line);
-	check_for_pipe(tok);
-	enumeration(tok);
-	check_for_cmd_args(&tok);
-	convert_to_new_list(tok, &commands);
-	// t_token	*commands = ft_new_list(tok);
-	while(commands)
-	{
-		int i = 0;
-		while (commands->data[i]) {
-			printf("--> %s  + type : %d\n", commands->data[i], tok->type);
-			i++;
-			tok = tok->next;
-		}
-		printf("====\n");
-		commands= commands->next;
-	}
+		char* line = readline("my_bash-4.5$ ");
+		if (!line)
+			return ;
+		t_token *tok = NULL;
+		t_cmds	*commands =NULL;
+		convert_it(line, &tok);
+		free(line);
+		check_for_pipe(tok);
+		enumeration(tok);
+		check_for_cmd_args(&tok);
+		convert_to_new_list(tok, &commands);
+		// while(commands->data)
+		// {
+		// 	int i = 0;
+		// 	while(commands->data[i])
+		// 	{
+		// 		printf("data = {%s}\n", commands->data[i]);
+		// 		i++;
+		// 	}
+		// 	commands = commands->next;
+		// }
+	// }
 	while(tok)
 	{
 		t_token *tmp = tok->next;

@@ -6,19 +6,23 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 03:36:57 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/01 23:27:23 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/08 01:37:51 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../tokenizer/tokenizer.h"
 
-int	ft_len_args(char	**str)
+int	ft_len_args(char **str)
 {
 	int i;
 
 	i = 0;
-	while (str[i])
+	while(str[i])
+	{
+		printf("str[%d] = %s\n", i, str[i]);
 		i++;
+	}
+	printf("===\n");
 	return (i);
 }
 
@@ -74,9 +78,21 @@ void	convert_to_new_list(t_token	*token, t_cmds	**cmnd)
 {
 	t_token	*command = ft_new_list(token);
 	t_token	*head = command;
+		// int i=0;
+		// while(head->data[i])
+		// {
+		// 	printf("data = {%s}\n", head->data[i]);
+		// 	i++;
+		// }
 	while(head)
 	{
-		t_cmds	*tmp = new_node(ft_len_args(head->data));
+		if (!head->data)
+			printf("error\n");
+		int len = ft_len_args(head->data);
+		printf("len = %d\n", len);
+		printf("====\n");
+		// exit(0);
+		t_cmds	*tmp = new_node(len);
 		add_node(cmnd, tmp);
 		t_cmds	*last = last_node(*cmnd);
 		int j=0;
@@ -85,6 +101,13 @@ void	convert_to_new_list(t_token	*token, t_cmds	**cmnd)
 			last->data[j] = ft_strdup(head->data[j]);
 			j++;
 		}
+		// int len = ft_len_args(head->data);
+		// while(j < len && head->data[j])
+		// {
+		// 	if (head->data[j][ft_strlen(head->data[j]) - 1] == '\0')
+    	// 		last->data[j] = ft_strdup(head->data[j]);
+    	// 	j++;
+		// }
 		last->data[j] = NULL;
 		head = head->next;
 	}

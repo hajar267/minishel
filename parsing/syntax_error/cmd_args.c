@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 11:06:01 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/06/30 12:16:56 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/05 22:14:07 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,3 +35,12 @@ void	check_for_cmd_args(t_token	**token)
 			head = head->next;
 	}
 }
+
+// void	check_for_cmd_file(t_token	**token)
+// {
+// 	t_token	*head = *token;
+// 	while(head)
+// 	{
+		
+// 	}
+// }

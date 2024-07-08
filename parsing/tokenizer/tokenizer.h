@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:54:25 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/01 23:09:07 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/08 00:29:27 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ bool			is_separator(int c);
 bool			is_space(int c);
 bool			is_character(int c);
 t_token			*lst_new(t_token *var, int len);
-int				ft_strlen(char *str);
+int				ft_strlen(const char *str);
 void			to_next_node(t_token **token, t_token *data);
 t_token			*ft_lstlast(t_token *data);
 char			*ft_strdup(char *s);
