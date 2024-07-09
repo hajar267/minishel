@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:41:41 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/08 01:36:03 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/09 01:38:26 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@ void	ft_store_data(t_token **command, t_token *token, int var)
         return;
 	t_token	*last = ft_lstlast(*command);
 	last->data[var] = ft_strdup(token->content);
-	var++;
-	if (!token->next || ft_red(token->next->content) || token->type == PIPE)
-		last->data[var] = NULL;
 }
 
 // int	get_length(t_token	*token)
@@ -56,14 +53,12 @@ void	ft_store_data(t_token **command, t_token *token, int var)
 // 	int len;
 
 // 	len = 0;
-// 	printf("%s\n", token->next->next->content);
-// 	if (ft_red(token->prev->content) || token->type == PIPE)
+// 	if (!token || !token->content)
+// 		return (0);
+// 	if (ft_red(token->content) || token->type == PIPE)
 // 		return (1);
-// 	if (token->type == PIPE)
-// 		printf("kk1\n");
-		
-// 	// while(token->content && !ft_red(token->prev->content) && token->type != PIPE)
-// 	// 	len++;
+// 	while(token->content && !ft_red(token->content) && token->type != PIPE)
+// 		len++;
 // 	return (len);
 // }
 
@@ -72,18 +67,10 @@ t_token	*ft_new_list(t_token *token)
 	t_token	*command=NULL;
 	t_token	*head;
 	t_token	*tmp=NULL;
-	int j;
+	int j = 0;
 
 	head = token;
 	int len = ft_len(head);
-	// printf("-len : %d\n", len);
-	// exit(0);
-		// int i = 0;
-		// while(command->data[i])
-		// {
-		// 	printf("data = {%s}\n", command->data[i]);
-		// 	i++;
-		// }
 	while(head)
 	{
 		if (!head->prev || ft_red(head->content) || head->type == PIPE || \
@@ -94,6 +81,10 @@ t_token	*ft_new_list(t_token *token)
 			to_next_node(&command, tmp);
 		}
 		ft_store_data(&command, head, j);
+	if (!head->next || head->next->type == PIPE || ft_red(head->next->content) \
+	|| head->type == PIPE || ft_red(head->content))
+		ft_lstlast(command)->data[j++] = NULL;
+		// exit(0);
 		j++;
 		head = head->next;
 	}

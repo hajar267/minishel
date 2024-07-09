@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:54:07 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/08 01:11:28 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/09 00:24:07 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ t_token	*ft_tokenizer(char *line)
 		else if (is_character(line[i]))
 			store_data_characters(&var, &token, line, i);
 	}
+	// t_token	*last = ft_lstlast(token);
+	// last->next = NULL;
 	return (token);
 }
 
@@ -135,7 +137,27 @@ void convert_it(char *line, t_token **head_ref)
 		token = tmp;
     }
 }
+int	get_length(t_token	*token)
+{
+	int len;
 
+	len = 0;
+	if (!token || !token->content)
+		return (0);
+	if (ft_red(token->content) || token->type == PIPE)
+		return (1);
+	while(token && !ft_red(token->content) && token->type != PIPE)
+	{
+		token = token->next;
+		len++;
+	}
+	return (len);
+}
+
+void	lk(void)
+{
+	system ("leaks minicoper");
+}
 void	read_line(void)
 {
 	while(true)
@@ -151,28 +173,25 @@ void	read_line(void)
 		enumeration(tok);
 		check_for_cmd_args(&tok);
 		convert_to_new_list(tok, &commands);
-		// while(commands->data)
+		// int len = get_length(tok);
+		// printf("len = %d\n", len);
+		// while(tok)
 		// {
-		// 	int i = 0;
-		// 	while(commands->data[i])
-		// 	{
-		// 		printf("data = {%s}\n", commands->data[i]);
-		// 		i++;
-		// 	}
-		// 	commands = commands->next;
+		// 	printf("data : %s\n", tok->content);
+		// 	tok = tok ->next;
 		// }
+	// while(tok)
+	// {
+	// 	t_token *tmp = tok->next;
+	// 	free(tok->content);
+	// 	free(tok);
+	// 	tok = tmp;
 	// }
-	while(tok)
-	{
-		t_token *tmp = tok->next;
-		free(tok->content);
-		free(tok);
-		tok = tmp;
-	}
 	}
 }
 
 int main()
 {
+	// atexit(lk);
 	read_line();
 }

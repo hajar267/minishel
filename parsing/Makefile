@@ -6,7 +6,7 @@
 #    By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/04 16:05:43 by hfiqar            #+#    #+#              #
-#    Updated: 2024/07/08 01:27:57 by hfiqar           ###   ########.fr        #
+#    Updated: 2024/07/08 22:48:41 by hfiqar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC = tokenizer/characters.c \
 	syntax_error/cmd_args.c \
 	syntax_error/new_list.c 
 
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 # -fsanitize=address -g
 LFLAGS = "-L$(shell brew --prefix readline)/lib"
 IFLAGS = "-I$(shell brew --prefix readline)/include"

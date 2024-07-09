@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 23:43:24 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/06 00:40:46 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/08 23:55:33 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_error(void)
 {
-	write(2, "syntax_error !\n", 18);
+	write(2, "syntax_error !\n", 16);
 	return ;
 }
 
