@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:54:07 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/09 00:24:07 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/11 03:09:14 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,6 @@ t_token	*ft_tokenizer(char *line)
 		else if (is_character(line[i]))
 			store_data_characters(&var, &token, line, i);
 	}
-	// t_token	*last = ft_lstlast(token);
-	// last->next = NULL;
 	return (token);
 }
 
@@ -175,18 +173,24 @@ void	read_line(void)
 		convert_to_new_list(tok, &commands);
 		// int len = get_length(tok);
 		// printf("len = %d\n", len);
-		// while(tok)
-		// {
-		// 	printf("data : %s\n", tok->content);
-		// 	tok = tok ->next;
-		// }
-	// while(tok)
-	// {
-	// 	t_token *tmp = tok->next;
-	// 	free(tok->content);
-	// 	free(tok);
-	// 	tok = tmp;
-	// }
+		while(commands)
+		{
+			int i = 0;
+			while(commands->data[i])
+			{
+				printf("data : %s\n", commands->data[i]);
+				i++;
+			}
+			printf("----\n");
+			commands = commands ->next;
+		}
+	while(tok)
+	{
+		t_token *tmp = tok->next;
+		free(tok->content);
+		free(tok);
+		tok = tmp;
+	}
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 03:36:57 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/09 01:13:55 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/10 22:59:49 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,6 @@ void	convert_to_new_list(t_token	*token, t_cmds	**cmnd)
 			last->data[j] = ft_strdup(head->data[j]);
 			j++;
 		}
-		// int len = ft_len_args(head->data);
-		// while(j < len && head->data[j])
-		// {
-		// 	if (head->data[j][ft_strlen(head->data[j]) - 1] == '\0')
-    	// 		last->data[j] = ft_strdup(head->data[j]);
-    	// 	j++;
-		// }
 		last->data[j] = NULL;
 		head = head->next;
 	}
