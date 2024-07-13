@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:54:07 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/11 03:09:14 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/13 02:45:07 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ void	lk(void)
 {
 	system ("leaks minicoper");
 }
+
 void	read_line(void)
 {
 	while(true)
@@ -169,18 +170,22 @@ void	read_line(void)
 		free(line);
 		check_for_pipe(tok);
 		enumeration(tok);
-		check_for_cmd_args(&tok);
+		check_for_cmd_red_args(&tok);
+		// leaks in |
+		//          |
+		// 		 ~
 		convert_to_new_list(tok, &commands);
-		// int len = get_length(tok);
-		// printf("len = %d\n", len);
 		while(commands)
 		{
 			int i = 0;
 			while(commands->data[i])
 			{
-				printf("data : %s\n", commands->data[i]);
+				printf("data : %s  type : %d\n", commands->data[i], tok->type);
 				i++;
+				if (commands->data[i])
+					tok = tok->next;
 			}
+			tok = tok->next;
 			printf("----\n");
 			commands = commands ->next;
 		}
@@ -196,6 +201,6 @@ void	read_line(void)
 
 int main()
 {
-	// atexit(lk);
+	atexit(lk);
 	read_line();
 }

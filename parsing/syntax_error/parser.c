@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:41:41 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/11 03:21:02 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/13 01:47:22 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,11 @@ t_token	*ft_new_list(t_token *token) // here
 	if (head->next == NULL || head->next->type == PIPE || ft_red(head->next->content) \
 	|| head->type == PIPE || ft_red(head->content))
 	{
-		printf("j = %d\n", j);
 		t_token	*lst = ft_lstlast(command);
 		lst->data[j+1] = NULL;
 	}
 	j++;
-		head = head->next;
+	head = head->next;
 	}
 	return(command);
 }

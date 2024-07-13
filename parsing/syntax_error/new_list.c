@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 03:36:57 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/10 22:59:49 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/13 01:47:09 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,12 @@ void	convert_to_new_list(t_token	*token, t_cmds	**cmnd)
 			j++;
 		}
 		last->data[j] = NULL;
+		int i =0;
+		while(head->data[i])
+		{
+			free(head->data[i]);
+			i++;
+		}
 		head = head->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:54:25 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/08 00:29:27 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/13 02:09:02 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <fcntl.h>
 
 typedef enum e_token_type {
 	ARG,
@@ -50,6 +51,7 @@ typedef struct s_cmds
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
 	int				j;
+	int				fd;
 }t_cmds;
 
 //syntax_error_c
@@ -62,8 +64,9 @@ bool			ft_si(char	*str);
 bool	ft_red(char *str);
 int	ft_len(t_token	*token);
 t_token	*ft_new_list(t_token *token);
-void	check_for_cmd_args(t_token	**token);
+void	check_for_cmd_red_args(t_token	**token);
 void	convert_to_new_list(t_token	*token, t_cmds	**cmnd);
+// void	check_for_red_args(t_token	**token);
 
 // tokenizer_utils_C
 int				is_quote(int c);
