@@ -6,22 +6,23 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:53:08 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/06/10 14:27:52 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/14 03:01:25 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
+
 void	store_data_separator(t_token *var, t_token **token, char *line, int i)
 {
 	t_token	*last;
+
 	last = ft_lstlast(*token);
-	while(line[i] && is_separator(line[i]))
+	while (line[i] && is_separator(line[i]))
 		last->content[var->j++] = line[i++];
 	last->content[var->j] = '\0';
-	if(!line[i])
+	if (!line[i])
 	{
 		write(2, "syntax error!\n", 14);
-		// exit(EXIT_FAILURE);
 		return ;
 	}
 	check_after_separator(var, token, line, i);
@@ -29,7 +30,8 @@ void	store_data_separator(t_token *var, t_token **token, char *line, int i)
 
 void	check_after_separator(t_token *var, t_token **token, char *line, int i)
 {
-	t_token *tmp;
+	t_token	*tmp;
+
 	if (is_space(line[i]))
 		handle_white_space(var, token, line, i);
 	else

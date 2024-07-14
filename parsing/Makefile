@@ -6,7 +6,7 @@
 #    By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/04 16:05:43 by hfiqar            #+#    #+#              #
-#    Updated: 2024/07/12 23:16:47 by hfiqar           ###   ########.fr        #
+#    Updated: 2024/07/14 05:20:48 by hfiqar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,15 +19,18 @@ SRC = tokenizer/characters.c \
 	tokenizer/single_quotes.c \
 	tokenizer/tokenizer_utils.c \
 	tokenizer/tokenizer.c \
-	syntax_error/pipe.c \
+	syntax_error/error.c \
 	syntax_error/parser.c \
-	syntax_error/num.c \
+	syntax_error/enum.c \
 	syntax_error/cmd_args.c \
-	syntax_error/new_list.c 
-
-CFLAGS = -Wall -Wextra -Werror
+	syntax_error/new_list.c \
+	syntax_error/open_files.c \
+	main/main.c
+	
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 # -fsanitize=address -g
-LFLAGS = "-L$(shell brew --prefix readline)/lib"
+# LFLAGS = "-L$(shell brew --prefix readline)/lib"
+LFLAGS = "-L/goinfre/hfiqar/homebrew/opt/readline/lib"
 IFLAGS = "-I$(shell brew --prefix readline)/include"
 
 OBJ = $(SRC:.c=.o)

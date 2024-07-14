@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:54:25 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/13 02:09:02 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/14 05:37:50 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <fcntl.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 typedef enum e_token_type {
 	ARG,
@@ -43,6 +45,7 @@ typedef struct s_token {
 	struct s_token	*prev;
 	int				x;
 	int				j;
+	int				len;
 }t_token;
 
 typedef struct s_cmds
@@ -52,6 +55,9 @@ typedef struct s_cmds
 	struct s_cmds	*prev;
 	int				j;
 	int				fd;
+	int				fd_b;
+	int				fd_a;
+	int				fd_h;
 }t_cmds;
 
 //syntax_error_c
@@ -67,6 +73,10 @@ t_token	*ft_new_list(t_token *token);
 void	check_for_cmd_red_args(t_token	**token);
 void	convert_to_new_list(t_token	*token, t_cmds	**cmnd);
 // void	check_for_red_args(t_token	**token);
+void	ft_open_files(t_cmds	*command);
+void convert_it(char *line, t_token **head_ref);
+t_token	*ft_tokenizer(char *line);
+int	ft_len_args(char **str);
 
 // tokenizer_utils_C
 int				is_quote(int c);

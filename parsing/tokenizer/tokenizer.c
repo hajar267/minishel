@@ -6,13 +6,11 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:54:07 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/13 02:45:07 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/14 02:53:56 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
-#include <readline/readline.h>
-#include <readline/history.h>
 
 char	*ft_strdup(char *s)
 {
@@ -34,17 +32,11 @@ char	*ft_strdup(char *s)
 	return (str);
 }
 
-int	ft_strlen(const char *str)
-{
-	int i =0;
-	while(str[i])
-		i++;
-	return (i);
-}
-
 t_token	*lst_new(t_token *var, int len)
 {
-	t_token	*node = malloc(sizeof(t_token));
+	t_token	*node;
+
+	node = malloc(sizeof(t_token));
 	if (!node)
 		return (NULL);
 	node->content = malloc(len + 1);
@@ -52,7 +44,7 @@ t_token	*lst_new(t_token *var, int len)
 		return (NULL);
 	node->next = NULL;
 	node->prev = NULL;
-	var->j=0;
+	var->j = 0;
 	return (node);
 }
 
@@ -83,15 +75,19 @@ void	to_next_node(t_token **token, t_token *data)
 t_token	*ft_tokenizer(char *line)
 {
 	t_token	var;
-	t_token *token = NULL;
-	t_token *data = NULL;
-	int len = ft_strlen(line);
-	int i=0;
+	t_token	*data;
+	t_token	*token;
+	int		i;
+
+	var.len = ft_strlen(line);
+	data = NULL;
+	token = NULL;
+	i = 0;
 	if (is_space(line[i]))
 		handle_white_space(&var, &token, line, i);
 	else
 	{
-		data = lst_new(&var, len);
+		data = lst_new(&var, var.len);
 		to_next_node(&token, data);
 		if (is_quote(line[i]) == 1)
 			store_data_s_quote(&var, &token, line, i);
@@ -103,104 +99,4 @@ t_token	*ft_tokenizer(char *line)
 			store_data_characters(&var, &token, line, i);
 	}
 	return (token);
-}
-
-void convert_it(char *line, t_token **head_ref)
-{
-    t_token *token = ft_tokenizer(line);
-    t_token *current = NULL;
-
-    while (token)
-    {
-        current = malloc(sizeof(t_token));
-		if (!current)
-			return ;
-        current->content = ft_strdup(token->content);
-        current->next = NULL;
-		current->prev = NULL;
-
-        if (*head_ref == NULL)
-            *head_ref = current;
-        else
-        {
-            t_token *last = *head_ref;
-            while (last->next!= NULL)
-                last = last->next;
-            last->next = current;
-			current->prev = last;
-        }
-		t_token	*tmp = token->next;
-        free(token->content);
-        free(token);
-		token = tmp;
-    }
-}
-int	get_length(t_token	*token)
-{
-	int len;
-
-	len = 0;
-	if (!token || !token->content)
-		return (0);
-	if (ft_red(token->content) || token->type == PIPE)
-		return (1);
-	while(token && !ft_red(token->content) && token->type != PIPE)
-	{
-		token = token->next;
-		len++;
-	}
-	return (len);
-}
-
-void	lk(void)
-{
-	system ("leaks minicoper");
-}
-
-void	read_line(void)
-{
-	while(true)
-	{
-		char* line = readline("my_bash-4.5$ ");
-		if (!line)
-			return ;
-		t_token *tok = NULL;
-		t_cmds	*commands =NULL;
-		convert_it(line, &tok);
-		free(line);
-		check_for_pipe(tok);
-		enumeration(tok);
-		check_for_cmd_red_args(&tok);
-		// leaks in |
-		//          |
-		// 		 ~
-		convert_to_new_list(tok, &commands);
-		while(commands)
-		{
-			int i = 0;
-			while(commands->data[i])
-			{
-				printf("data : %s  type : %d\n", commands->data[i], tok->type);
-				i++;
-				if (commands->data[i])
-					tok = tok->next;
-			}
-			tok = tok->next;
-			printf("----\n");
-			commands = commands ->next;
-		}
-	while(tok)
-	{
-		t_token *tmp = tok->next;
-		free(tok->content);
-		free(tok);
-		tok = tmp;
-	}
-	}
-}
-
-int main()
-{
-	atexit(lk);
-	read_line();
 }

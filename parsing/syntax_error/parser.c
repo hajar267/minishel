@@ -6,18 +6,30 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:41:41 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/13 01:47:22 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/14 05:38:15 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../tokenizer/tokenizer.h"
 
-int	ft_len(t_token	*token)
+int	ft_len_args(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(token)
+	while (str[i])
+	{
+		i++;
+	}
+	return (i);
+}
+
+int	ft_len(t_token *token)
+{
+	int	i;
+
+	i = 0;
+	while (token)
 	{
 		token = token->next;
 		i++;
@@ -28,52 +40,60 @@ int	ft_len(t_token	*token)
 t_token	*ft_lst_new(int len)
 {
 	t_token	*command;
+
 	command = malloc(sizeof(t_token));
 	if (!command)
-		return(NULL);
+		return (NULL);
 	command->data = malloc(sizeof(char *) * (len + 1));
 	if (!command->data)
-		return(NULL);
+		return (NULL);
 	command->next = NULL;
 	command->prev = NULL;
 	return (command);
 }
 
-void	ft_store_data(t_token **command, t_token *token, int var)
+int	ft_store_data(t_token **command, t_token *token, int j, int len)
 {
-	if (*command == NULL)
-        return;
-	t_token	*last = ft_lstlast(*command);
-	last->data[var] = ft_strdup(token->content);
+	t_token	*tmp;
+	t_token	*last;
+
+	tmp = NULL;
+	if (!token->prev || ft_red(token->content) || token->type == PIPE || \
+	ft_red(token->prev->content) || token->prev->type == PIPE)
+	{
+		j = 0;
+		tmp = ft_lst_new(len);
+		to_next_node(command, tmp);
+	}
+	last = ft_lstlast(*command);
+	last->data[j] = ft_strdup(token->content);
+	return (j);
 }
 
-t_token	*ft_new_list(t_token *token) // here
+t_token	*ft_new_list(t_token *token)
 {
-	t_token	*command=NULL;
+	t_token	*command;
 	t_token	*head;
-	t_token	*tmp=NULL;
-	int j = 0;
+	t_token	*lst;
+	int		j;
+	int		len;
 
+	command = NULL;
 	head = token;
-	int len = ft_len(head);
-	while(head)
+	len = ft_len(head);
+	j = 0;
+	while (head)
 	{
-		if (!head->prev || ft_red(head->content) || head->type == PIPE || \
-		ft_red(head->prev->content) || head->prev->type == PIPE)
+		j = ft_store_data(&command, head, j, len);
+		if (head->next == NULL || head->next->type == PIPE || \
+		ft_red(head->next->content) || head->type == PIPE || \
+		ft_red(head->content))
 		{
-			j = 0;
-			tmp = ft_lst_new(len);
-			to_next_node(&command, tmp);
+			lst = ft_lstlast(command);
+			lst->data[j + 1] = NULL;
 		}
-		ft_store_data(&command, head, j);
-	if (head->next == NULL || head->next->type == PIPE || ft_red(head->next->content) \
-	|| head->type == PIPE || ft_red(head->content))
-	{
-		t_token	*lst = ft_lstlast(command);
-		lst->data[j+1] = NULL;
+		j++;
+		head = head->next;
 	}
-	j++;
-	head = head->next;
-	}
-	return(command);
+	return (command);
 }

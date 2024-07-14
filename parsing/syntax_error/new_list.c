@@ -6,23 +6,11 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 03:36:57 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/13 01:47:09 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/14 05:39:52 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../tokenizer/tokenizer.h"
-
-int	ft_len_args(char **str)
-{
-	int i;
-
-	i = 0;
-	while(str[i])
-	{
-		i++;
-	}
-	return (i);
-}
 
 t_cmds	*last_node(t_cmds *data)
 {
@@ -32,6 +20,7 @@ t_cmds	*last_node(t_cmds *data)
 		data = data->next;
 	return (data);
 }
+
 void	add_node(t_cmds **token, t_cmds *data)
 {
 	t_cmds	*nod;
@@ -49,9 +38,11 @@ void	add_node(t_cmds **token, t_cmds *data)
 
 t_cmds	*new_node(int i)
 {
-	t_cmds	*node = malloc(sizeof(t_cmds));
+	t_cmds	*node;
+
+	node = malloc(sizeof(t_cmds));
 	if (!node)
-		return(NULL);
+		return (NULL);
 	node->data = malloc(sizeof(char *) * (i + 1));
 	if (!node->data)
 		return (NULL);
@@ -60,11 +51,14 @@ t_cmds	*new_node(int i)
 	return (node);
 }
 
-void	store_data(t_cmds	**cmnd, t_token	*token)
+void	store_data(t_cmds	**cmd, t_token	*token)
 {
-	t_cmds	*last = last_node(*cmnd);
-	int j=0;
-	while(token->data[j])
+	int		j;
+	t_cmds	*last;
+
+	j = 0;
+	last = last_node(*cmd);
+	while (token->data[j])
 	{
 		last->data[j] = ft_strdup(token->data[j]);
 		j++;
@@ -72,25 +66,24 @@ void	store_data(t_cmds	**cmnd, t_token	*token)
 	last->data[j] = NULL;
 }
 
-void	convert_to_new_list(t_token	*token, t_cmds	**cmnd)
+void	convert_to_new_list(t_token *token, t_cmds **cmnd)
 {
-	t_token	*command = ft_new_list(token);
-	t_token	*head = command;
-	while(head)
+	t_token	*command;
+	t_token	*head;
+	t_cmds	*tmp;
+	int		i;
+	int		len;
+
+	command = ft_new_list(token);
+	head = command;
+	while (head)
 	{
-		int len = ft_len_args(head->data);
-		t_cmds	*tmp = new_node(len);
+		len = ft_len_args(head->data);
+		tmp = new_node(len);
 		add_node(cmnd, tmp);
-		t_cmds	*last = last_node(*cmnd);
-		int j=0;
-		while(head->data[j])
-		{
-			last->data[j] = ft_strdup(head->data[j]);
-			j++;
-		}
-		last->data[j] = NULL;
-		int i =0;
-		while(head->data[i])
+		store_data(cmnd, head);
+		i = 0;
+		while (head->data[i])
 		{
 			free(head->data[i]);
 			i++;

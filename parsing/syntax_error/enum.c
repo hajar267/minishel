@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:16:28 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/06/15 18:26:49 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/14 05:20:14 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ bool	ft_si(char *str)
 
 void	enumeration(t_token *var)
 {
-	t_token	*head = var;
+	t_token	*head;
+
+	head = var;
 	while (head)
 	{
 		if (token_content_type(head->content) == PIPE)
