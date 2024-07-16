@@ -6,11 +6,11 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 02:22:19 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/14 06:52:07 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/15 22:16:30 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../tokenizer/tokenizer.h"
+#include "tokenizer/tokenizer.h"
 
 void convert_it(char *line, t_token **head_ref)
 {
