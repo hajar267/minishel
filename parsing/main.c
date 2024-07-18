@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 02:22:19 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/15 22:16:30 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/18 00:58:57 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,11 @@ void	read_line(void)
 		t_token *tok = NULL;
 		t_cmds	*commands =NULL;
 		convert_it(line, &tok);
+		// we enum just into " " for $
 		free(line);
 		check_for_pipe(tok);
 		enumeration(tok);
 		check_for_cmd_red_args(&tok);
-		// leaks in |
-		//          |
-		// 		 ~
 		convert_to_new_list(tok, &commands);
 		ft_open_files(commands);
 		while(commands)

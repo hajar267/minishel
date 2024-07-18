@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:54:25 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/15 21:02:51 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/17 08:15:35 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,3 +103,5 @@ void			check_after_spaces(t_token *var, t_token **token, char *line, int i);
 void			store_data_separator(t_token *var, t_token **token,char *line, int i);
 void			check_after_separator(t_token *var, t_token **token ,char *line, int i);
 #endif
+
+// how bash parsing send the data to execution part
