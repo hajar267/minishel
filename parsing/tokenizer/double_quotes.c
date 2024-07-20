@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:51:26 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/18 06:32:54 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/20 06:40:33 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,21 @@ void	store_data_d_quote(t_token *var, t_token **token, char *line, int i)
 	i++;
 	while (line[i] && is_quote(line[i]) != 2)
 	{
-		/* if (line[i] == '$')
-			{
-				while((is_quote(line[i]) == 0) && (!is_separator(line[i])) && (!is_space(line[i])))
-				{
-					last->content[var->j++] = 'x';
-					i++;
-					send the line and the start and the end to the function that replaced the $ by his value
-				}
-			}
-			if (line[i] && is_quote(line[i] != 2))
-		*/
-		last->content[var->j++] = line[i++];
-	
+		if (line[i] == '$')
+		{
+			i++;
+			int j = i;
+			while(line[i] && line[i] != '$' &&(is_quote(line[i]) == 0) && (!is_separator(line[i])) && (!is_space(line[i])))
+				i++;
+			char *data = ft_replace(line, j, i - 1);
+			int len = ft_strlen(data);
+			last->content = (char *)ft_realloc(last->content, len + var->len, var->j);
+			int x = 0;
+			while(data[x])
+				last->content[var->j++] = data[x++];
+		}
+		else
+			last->content[var->j++] = line[i++];
 	}
 	last->content[var->j] = '\0';
 	if (!line[i])

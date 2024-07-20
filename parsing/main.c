@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 02:22:19 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/18 00:58:57 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/20 06:42:57 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	read_line(void)
 		enumeration(tok);
 		check_for_cmd_red_args(&tok);
 		convert_to_new_list(tok, &commands);
-		ft_open_files(commands);
+		// ft_open_files(commands);
 		while(commands)
 		{
 			int i = 0;

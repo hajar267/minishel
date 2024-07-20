@@ -6,7 +6,7 @@
 #    By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/04 16:05:43 by hfiqar            #+#    #+#              #
-#    Updated: 2024/07/15 22:16:24 by hfiqar           ###   ########.fr        #
+#    Updated: 2024/07/20 02:51:29 by hfiqar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,10 @@ SRC = tokenizer/characters.c \
 	syntax_error/cmd_args.c \
 	syntax_error/new_list.c \
 	syntax_error/open_files.c \
-	main.c
+	main.c \
+	expander/expander_utils.c 
 	
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 # -fsanitize=address -g
 # LFLAGS = "-L$(shell brew --prefix readline)/lib"
 LFLAGS = "-L/goinfre/hfiqar/homebrew/opt/readline/lib"

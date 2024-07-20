@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:41:35 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/18 06:58:48 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/20 06:18:04 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,21 @@ void	store_data_characters(t_token *var, t_token **token, char *line, int i)
 	last = ft_lstlast(*token);
 	while (line[i] && is_character(line[i]))
 	{
-	/* if (line[i] == '$')
-	{
-		last->content[var->j++] = 'x';
-		while(line[i] != '$' && ...)
-		{	
-			last->content[var->j++] = 'x';
+		if (line[i] == '$')
+		{
 			i++;
+			int j = i;
+			while(line[i] && line[i] != '$' && (!is_separator(line[i])) && (!is_space(line[i])) && (is_quote(line[i]) == 0))
+				i++;
+			char *data = ft_replace(line, j, i - 1);
+			int len = ft_strlen(data);
+			last->content = (char *)ft_realloc(last->content, len + var->len, var->j);
+			int x = 0;
+			while(data[x])
+				last->content[var->j++] = data[x++];
 		}
-		we send the line and the start and the end to that function to get the value of $
-	}
-	else
-	*/
-		last->content[var->j++] = line[i++];
+		else
+			last->content[var->j++] = line[i++];
 	}
 	last->content[var->j] = '\0';
 	if (!line[i])
@@ -39,11 +41,6 @@ void	store_data_characters(t_token *var, t_token **token, char *line, int i)
 	check_after_character(var, token, line, i);
 }
 
-/*
-	i found a small problms with $ in char so i thing i will create a int in my struct 
-	and i will assigned for each token has a single quotes 1 and double quotes 2
-	and 0 for others 
-*/
 void	check_after_character(t_token *var, t_token **token, char *line, int i)
 {
 	t_token	*tmp;

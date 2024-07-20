@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:54:25 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/17 08:15:35 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/20 03:10:56 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,9 @@ int				ft_strlen(const char *str);
 void			to_next_node(t_token **token, t_token *data);
 t_token			*ft_lstlast(t_token *data);
 char			*ft_strdup(char *s);
+void *ft_realloc(void *ptr, int new_size, int i);
+char *ft_replace(char *line, int start, int end);
+
 // handle_quotes_C
 void			store_data_s_quote(t_token *var, t_token **token ,char *line, int i);
 void			check_after_s_quote(t_token *var, t_token **token ,char *line, int i);
