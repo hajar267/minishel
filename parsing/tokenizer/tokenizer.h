@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:54:25 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/20 03:10:56 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/22 03:10:59 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	ft_open_files(t_cmds	*command);
 void convert_it(char *line, t_token **head_ref);
 t_token	*ft_tokenizer(char *line);
 int	ft_len_args(char **str);
+int	ft_strcmp(const	char	*s1, const	char	*s2);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 // tokenizer_utils_C
 int				is_quote(int c);

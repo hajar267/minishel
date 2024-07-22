@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 02:22:19 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/20 06:42:57 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/22 04:24:03 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,53 @@ void	read_line(void)
 		free(line);
 		check_for_pipe(tok);
 		enumeration(tok);
+		t_token	*head = tok;
+		int fd;
+		char *file;
+		while(head)
+		{
+			if(head->type == HEREDOC)
+			{
+				while(true)
+				{
+					char *h_d = readline("> ");
+					if (!h_d)
+						break ;
+					//check for $ if("$" or '$') or if($)
+					//h_d=getenv
+					//
+					if (ft_strcmp(h_d, head->next->content) == 0)
+						break ;
+					char *path = getenv("TMPDIR");
+					if (!path)
+						return;
+					printf("path : %s\n", path);
+					file = ft_strjoin(path, "heredoc");
+					printf("file : %s\n", file);
+					if (access(file, F_OK) == -1)
+					{
+						fd = open(file, O_RDWR | O_CREAT, 777);
+						if (fd == -1)
+						{
+							printf("error open\n");
+							return;
+						}
+					printf("fd_1 : %d\n", fd);
+					}
+						int i =0;
+					while(h_d[i])
+					{
+						write(fd, &h_d[i], 1);
+						i++;
+					}
+					write(fd,"\n",1);
+					printf("fd_2 : %d\n", fd);
+				}
+				unlink(file);
+				close(fd);
+			}
+			head = head->next;
+		}
 		check_for_cmd_red_args(&tok);
 		convert_to_new_list(tok, &commands);
 		// ft_open_files(commands);
@@ -88,3 +135,9 @@ int main()
 {
 	read_line();
 }
+
+/*
+	ther is a method to implimentate the << the we can call the readline another time 
+	in infinite loop and take her > to print it and then we save each line in a char ** or in a file 
+	and then we applicate the command before << to the file
+*/
