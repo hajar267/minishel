@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 02:22:19 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/22 04:24:03 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/23 04:48:50 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,24 @@ void	read_line(void)
 					char *h_d = readline("> ");
 					if (!h_d)
 						break ;
-					//check for $ if("$" or '$') or if($)
-					//h_d=getenv
-					//
 					if (ft_strcmp(h_d, head->next->content) == 0)
 						break ;
+					if (ft_strchr(h_d, '$') != NULL)
+					{
+						char *tmp = heredoc_expander(h_d);
+						// free(h_d);
+						// h_d = tmp;
+						// free(tmp);
+						printf("tmp : %s\n", tmp);
+						exit(0);
+					}
 					char *path = getenv("TMPDIR");
 					if (!path)
 						return;
-					printf("path : %s\n", path);
 					file = ft_strjoin(path, "heredoc");
-					printf("file : %s\n", file);
 					if (access(file, F_OK) == -1)
 					{
-						fd = open(file, O_RDWR | O_CREAT, 777);
+						fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 777);
 						if (fd == -1)
 						{
 							printf("error open\n");

@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 23:19:01 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/22 03:10:24 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/23 04:47:01 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,60 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	str[i] = '\0';
 	return (str);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (char)c)
+			return ((char *)(s + i));
+		i++;
+	}
+	if (s[i] == (char)c)
+		return ((char *)s + i);
+	return (NULL);
+}
+
+char	*heredoc_expander(char *line)
+{
+	int		i;
+	int		j;
+	int		x;
+	char	*env;
+	char	*data;
+
+	i = 0;
+	x = 0;
+	data = malloc(ft_strlen(line));
+	while (line[i])
+	{
+		if (line[i] == '$')
+		{
+			i++;
+			j = i;
+			while (line[i] && line[i] != '$' && line[i] != ' ' && (is_quote(line[i]) == 0))
+				i++;
+			env = ft_replace(line, j, i);
+			data = (char *)ft_realloc(data, ft_strlen(line) + ft_strlen(env), x);
+			int y=0;
+			while(env[y])
+			{
+				data[x] = env[y];
+				x++;
+				y++;
+			}
+		}
+		else
+		{
+			data[x] = line[i];
+			x++;
+			i++;
+		}
+	}
+	data[x] = '\0';
+	return (data);
 }
