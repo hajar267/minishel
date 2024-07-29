@@ -6,22 +6,24 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 02:22:19 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/23 04:48:50 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/29 11:22:43 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer/tokenizer.h"
 
-void convert_it(char *line, t_token **head_ref)
+int convert_it(char *line, t_token **head_ref)
 {
     t_token *token = ft_tokenizer(line);
+	if (token == NULL)
+		return (-1);
     t_token *current = NULL;
 
     while (token)
     {
         current = malloc(sizeof(t_token));
 		if (!current)
-			return ;
+			return (-1);
         current->content = ft_strdup(token->content);
         current->next = NULL;
 		current->prev = NULL;
@@ -41,6 +43,7 @@ void convert_it(char *line, t_token **head_ref)
         free(token);
 		token = tmp;
     }
+	return (1);
 }
 
 void	read_line(void)
@@ -49,67 +52,18 @@ void	read_line(void)
 	{
 		char* line = readline("my_bash-4.5$ ");
 		if (!line)
-			return ;
+			continue ;
 		t_token *tok = NULL;
 		t_cmds	*commands =NULL;
-		convert_it(line, &tok);
+		if (convert_it(line, &tok) == -1)
+			continue ;
 		// we enum just into " " for $
 		free(line);
 		check_for_pipe(tok);
 		enumeration(tok);
-		t_token	*head = tok;
-		int fd;
-		char *file;
-		while(head)
-		{
-			if(head->type == HEREDOC)
-			{
-				while(true)
-				{
-					char *h_d = readline("> ");
-					if (!h_d)
-						break ;
-					if (ft_strcmp(h_d, head->next->content) == 0)
-						break ;
-					if (ft_strchr(h_d, '$') != NULL)
-					{
-						char *tmp = heredoc_expander(h_d);
-						// free(h_d);
-						// h_d = tmp;
-						// free(tmp);
-						printf("tmp : %s\n", tmp);
-						exit(0);
-					}
-					char *path = getenv("TMPDIR");
-					if (!path)
-						return;
-					file = ft_strjoin(path, "heredoc");
-					if (access(file, F_OK) == -1)
-					{
-						fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 777);
-						if (fd == -1)
-						{
-							printf("error open\n");
-							return;
-						}
-					printf("fd_1 : %d\n", fd);
-					}
-						int i =0;
-					while(h_d[i])
-					{
-						write(fd, &h_d[i], 1);
-						i++;
-					}
-					write(fd,"\n",1);
-					printf("fd_2 : %d\n", fd);
-				}
-				unlink(file);
-				close(fd);
-			}
-			head = head->next;
-		}
 		check_for_cmd_red_args(&tok);
 		convert_to_new_list(tok, &commands);
+		heredoc(commands);
 		// ft_open_files(commands);
 		while(commands)
 		{

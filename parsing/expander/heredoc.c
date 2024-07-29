@@ -5,115 +5,100 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/21 23:19:01 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/23 04:47:01 by hfiqar           ###   ########.fr       */
+/*   Created: 2024/07/29 08:57:16 by hfiqar            #+#    #+#             */
+/*   Updated: 2024/07/29 10:55:32 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../tokenizer/tokenizer.h"
 
-int	ft_strcmp(const	char	*s1, const	char	*s2)
-{
-	size_t	i;
-
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-	{
-		i++;
-	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
-char    *ft_strcpy(char *dst, const char *src)
-{
-        int i = 0;
-        while(src[i])
-        {
-                dst[i] = src[i];
-                i++;
-        }
-        dst[i] = '\0';
-        return (dst);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	int		i;
-	int		j;
-	char	*str;
-
-	j = 0;
-	i = 0;
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	str = (char *)malloc(ft_strlen((char *)s1) + ft_strlen((char *)s2) + 1);
-	if (!str)
-		return (NULL);
-	while (s1[i])
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-	{
-		str[i++] = s2[j++];
-	}
-	str[i] = '\0';
-	return (str);
-}
-
-char	*ft_strchr(const char *s, int c)
+void	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
 
 	i = 0;
+	if (!s)
+		return ;
 	while (s[i])
 	{
-		if (s[i] == (char)c)
-			return ((char *)(s + i));
+		write (fd, &s[i], 1);
 		i++;
 	}
-	if (s[i] == (char)c)
-		return ((char *)s + i);
-	return (NULL);
+	write(fd, "\n", 1);
 }
 
-char	*heredoc_expander(char *line)
+void	*ft_memset(void	*b, int c, size_t len)
 {
-	int		i;
-	int		j;
-	int		x;
-	char	*env;
-	char	*data;
+	unsigned char	*str;
+	size_t			i;
 
+	str = (unsigned char *)b;
 	i = 0;
-	x = 0;
-	data = malloc(ft_strlen(line));
-	while (line[i])
+	while (len > i)
 	{
-		if (line[i] == '$')
+		str[i] = c;
+		i++;
+	}
+	return (b);
+}
+
+char *herdoc_read(char *h_d, t_cmds *commands)
+{
+	h_d = readline("> ");
+	if (!h_d)
+		return (NULL) ;
+	if (ft_strcmp(h_d, commands->next->data[0]) == 0)
+		return (NULL) ;
+	if (ft_strchr(h_d, '$') != NULL)
+	{
+		char *tmp = heredoc_expander(h_d);
+		h_d = ft_memset(h_d, 0, ft_strlen(h_d));
+		h_d = ft_strdup(tmp);
+		free(tmp);
+	}
+	return (h_d);
+}
+
+char *open_herdoc_file(t_cmds *commands, char *file)
+{
+	char *path = getenv("TMPDIR");
+	if (!path)
+		return (NULL) ;
+	file = ft_strjoin(path, "heredoc");
+	if (access(file, F_OK) == -1)
+	{
+		commands->fd_h = open(file, O_RDWR | O_CREAT | O_TRUNC, 777);
+		if (commands->fd_h == -1)
 		{
-			i++;
-			j = i;
-			while (line[i] && line[i] != '$' && line[i] != ' ' && (is_quote(line[i]) == 0))
-				i++;
-			env = ft_replace(line, j, i);
-			data = (char *)ft_realloc(data, ft_strlen(line) + ft_strlen(env), x);
-			int y=0;
-			while(env[y])
-			{
-				data[x] = env[y];
-				x++;
-				y++;
-			}
-		}
-		else
-		{
-			data[x] = line[i];
-			x++;
-			i++;
+			printf("error open\n");
+			return (NULL);
 		}
 	}
-	data[x] = '\0';
-	return (data);
+	return (file);
+}
+
+void	heredoc(t_cmds	*commands)
+{
+	char *file;
+
+	file = NULL;
+	while(commands)
+	{
+		if(ft_strcmp(commands->data[0], "<<") == 0)
+		{
+			while(true)
+			{
+				char *h_d = NULL;
+				h_d = herdoc_read(h_d, commands);
+				if (!h_d)
+					break ;
+				file = open_herdoc_file(commands, file);
+				if (!file)
+					break ;
+				ft_putstr_fd(h_d, commands->fd_h);
+			}
+			unlink(file);
+		}
+		commands = commands->next;
+	}
 }

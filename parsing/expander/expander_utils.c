@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 01:18:26 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/20 06:21:16 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/29 12:56:24 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,14 @@ void	*ft_memcpy(void	*dst, const	void *src, size_t n )
 	return ((void *)str);
 }
 
-void *ft_realloc(void *ptr, int new_size, int len) // i  can add a 3eme arg to realloc that the len of data of ptr
+void *ft_realloc(void *ptr, int new_size, int len) // i  can add a 3eme arg to realloc  --> the len of data --> ptr
 {
     if (ptr == NULL)
         return (malloc(new_size));
     void *new_ptr = malloc(new_size);
     if (new_ptr == NULL)
         return (NULL);
+	// printf("size : %d\n", new_size);
     ft_memcpy(new_ptr, ptr, len);
     free(ptr);
     return (new_ptr);
@@ -56,6 +57,7 @@ char *ft_replace(char *line, int start, int end)
 	while(start <= end)
 		content[i++] = line[start++];
 	content[i] = '\0';
+	// printf("content : %s\n", content);
 	char *data = getenv(content);
 	if (!data)
 		return (ft_strdup(""));

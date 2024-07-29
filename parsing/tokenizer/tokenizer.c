@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:54:07 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/14 02:53:56 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/28 09:45:45 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,19 +84,35 @@ t_token	*ft_tokenizer(char *line)
 	token = NULL;
 	i = 0;
 	if (is_space(line[i]))
-		handle_white_space(&var, &token, line, i);
+	{
+		if (handle_white_space(&var, &token, line, i) == -1)
+			return (NULL);
+	}
 	else
 	{
 		data = lst_new(&var, var.len);
 		to_next_node(&token, data);
 		if (is_quote(line[i]) == 1)
-			store_data_s_quote(&var, &token, line, i);
+		{
+			if (store_data_s_quote(&var, &token, line, i) == -1)
+				return (NULL);
+		}
 		else if (is_quote(line[i]) == 2)
-			store_data_d_quote(&var, &token, line, i);
+		{
+			if (store_data_d_quote(&var, &token, line, i) == -1)
+				return (NULL);
+		}
 		else if (is_separator(line[i]))
-			store_data_separator(&var, &token, line, i);
+		{
+			if (store_data_separator(&var, &token, line, i) == -1)
+				return (NULL);
+		}
 		else if (is_character(line[i]))
-			store_data_characters(&var, &token, line, i);
+		{
+			if (store_data_characters(&var, &token, line, i) == -1)
+				return (NULL);
+		}
 	}
 	return (token);
 }
+//"hajr"<

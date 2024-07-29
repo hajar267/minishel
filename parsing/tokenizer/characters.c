@@ -6,13 +6,13 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:41:35 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/20 06:18:04 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/28 11:57:05 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
 
-void	store_data_characters(t_token *var, t_token **token, char *line, int i)
+int	store_data_characters(t_token *var, t_token **token, char *line, int i)
 {
 	t_token	*last;
 
@@ -27,7 +27,9 @@ void	store_data_characters(t_token *var, t_token **token, char *line, int i)
 				i++;
 			char *data = ft_replace(line, j, i - 1);
 			int len = ft_strlen(data);
-			last->content = (char *)ft_realloc(last->content, len + var->len, var->j);
+			last->content = (char *)ft_realloc(last->content, var->j + len + 1 + var->len, var->j);
+			if (!last->content)
+				return (-1);
 			int x = 0;
 			while(data[x])
 				last->content[var->j++] = data[x++];
@@ -37,25 +39,37 @@ void	store_data_characters(t_token *var, t_token **token, char *line, int i)
 	}
 	last->content[var->j] = '\0';
 	if (!line[i])
-		return ;
-	check_after_character(var, token, line, i);
+		return (1);
+	if (check_after_character(var, token, line, i) == -1)
+		return (-1);
+	return (1);
 }
 
-void	check_after_character(t_token *var, t_token **token, char *line, int i)
+int	check_after_character(t_token *var, t_token **token, char *line, int i)
 {
 	t_token	*tmp;
 
 	if (is_quote(line[i]) == 1)
-		store_data_s_quote(var, token, line, i);
+	{
+		if (store_data_s_quote(var, token, line, i) == -1)
+			return (-1);
+	}
 	else if (is_quote(line[i]) == 2)
-		store_data_d_quote(var, token, line, i);
+	{
+		if (store_data_d_quote(var, token, line, i) == -1)
+			return (-1);
+	}
 	else if (is_separator(line[i]))
 	{
 		tmp = lst_new(var, ft_strlen(line) + 1);
 		to_next_node(token, tmp);
-		store_data_separator(var, token, line, i);
+		if (store_data_separator(var, token, line, i) == -1)
+			return (-1);
 	}
 	else if (is_space(line[i]))
-		handle_white_space(var, token, line, i);
-	return ;
+	{
+		if (handle_white_space(var, token, line, i) == -1)
+			return (-1);
+	}
+	return (1);
 }

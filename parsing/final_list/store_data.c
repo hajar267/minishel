@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 03:36:57 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/16 14:14:15 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/29 12:58:15 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	convert_to_new_list(t_token *token, t_cmds **cmnd)
 	head = command;
 	while (head)
 	{
+		//if i want to open the fds directly in tokens -->
 		// if (head->type == REDIRECT_IN || head->type == REDIRECT_OUT)
 		// 	head = head->next->next;
 		// ft_open_files(head->prev);

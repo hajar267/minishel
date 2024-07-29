@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:54:25 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/23 04:43:33 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/29 09:19:32 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,12 @@ typedef struct s_cmds
 	struct s_cmds	*prev;
 	int				j;
 	int				fd;
-	int				fd_b;
-	int				fd_a;
 	int				fd_h;
 }t_cmds;
+
+
+//herdoc
+void	heredoc(t_cmds	*command);
 
 //syntax_error_c
 void			ft_error(void);
@@ -72,9 +74,10 @@ int	ft_len(t_token	*token);
 t_token	*ft_new_list(t_token *token);
 void	check_for_cmd_red_args(t_token	**token);
 void	convert_to_new_list(t_token	*token, t_cmds	**cmnd);
+
 // void	check_for_red_args(t_token	**token);
 void	ft_open_files(t_cmds	*command);
-void convert_it(char *line, t_token **head_ref);
+int convert_it(char *line, t_token **head_ref);
 t_token	*ft_tokenizer(char *line);
 int	ft_len_args(char **str);
 int	ft_strcmp(const	char	*s1, const	char	*s2);
@@ -96,19 +99,19 @@ void *ft_realloc(void *ptr, int new_size, int i);
 char *ft_replace(char *line, int start, int end);
 
 // handle_quotes_C
-void			store_data_s_quote(t_token *var, t_token **token ,char *line, int i);
-void			check_after_s_quote(t_token *var, t_token **token ,char *line, int i);
-void			store_data_d_quote(t_token *var, t_token **token ,char *line, int i);
-void			check_after_d_quote(t_token *var, t_token **token ,char *line, int i);
+int			check_after_s_quote(t_token *var, t_token **token ,char *line, int i);
+int			store_data_s_quote(t_token *var, t_token **token ,char *line, int i);
+int			store_data_d_quote(t_token *var, t_token **token ,char *line, int i);
+int			check_after_d_quote(t_token *var, t_token **token ,char *line, int i);
 //handle_characters_C
-void			store_data_characters(t_token *var, t_token **token, char *line, int i);
-void			check_after_character(t_token *var, t_token **token ,char *line, int i);
+int			store_data_characters(t_token *var, t_token **token, char *line, int i);
+int			check_after_character(t_token *var, t_token **token ,char *line, int i);
 //handle_spaces_C
-void			handle_white_space(t_token *var, t_token **token, char *line, int i);
-void			check_after_spaces(t_token *var, t_token **token, char *line, int i);
+int			handle_white_space(t_token *var, t_token **token, char *line, int i);
+int			check_after_spaces(t_token *var, t_token **token, char *line, int i);
 //handle_separator_C
-void			store_data_separator(t_token *var, t_token **token,char *line, int i);
-void			check_after_separator(t_token *var, t_token **token ,char *line, int i);
+int			store_data_separator(t_token *var, t_token **token,char *line, int i);
+int			check_after_separator(t_token *var, t_token **token ,char *line, int i);
 #endif
 
 // how bash parsing send the data to execution part
