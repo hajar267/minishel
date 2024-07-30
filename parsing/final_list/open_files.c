@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 08:45:03 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/29 22:44:57 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/30 09:36:36 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void ft_red_out(t_cmds *command)
 		printf("failed to open\n");
 		exit(EXIT_FAILURE);
 	}
-	write(command->fd,"here >\n",7);
+	write(command->fd,"red\n",4);
+	close (command->fd);
 }
 
 void	ft_append(t_cmds *command)
@@ -31,18 +32,28 @@ void	ft_append(t_cmds *command)
 		printf("failed to open\n");
 		exit(EXIT_FAILURE);
 	}
-	write(command->fd,"here >\n",7);
+	write(command->fd,"n >\n",4);
+	close (command->fd);
 }
 
 void ft_red_in(t_cmds *command)
 {
-	command->fd = open((const char *)command->next->data[0], O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
-	if (command->fd == -1)
+	if (access(command->next->data[0], F_OK) == 0)
 	{
-		printf("failed to open\n");
+		command->fd = open(command->next->data[0], O_RDWR , S_IRUSR | S_IWUSR);
+		if (command->fd == -1)
+		{
+			printf("failed to open\n");
+			exit(EXIT_FAILURE);
+		}
+		write(command->fd,"h",1);
+		close (command->fd);
+	}
+	else
+	{
+		printf("NO such file or directory\n");
 		exit(EXIT_FAILURE);
 	}
-	write(command->fd,"here <\n",7);
 }
 
 void	ft_open_files(t_cmds	*command)
@@ -58,5 +69,3 @@ void	ft_open_files(t_cmds	*command)
 		command = command->next;
 	}
 }
-
-// // //if we pass the path when we want to create the file to open function

@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/11 12:15:44 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/30 11:23:41 by hfiqar           ###   ########.fr       */
+/*   Created: 2024/07/14 01:15:02 by istili            #+#    #+#             */
+/*   Updated: 2024/07/30 12:30:32 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "minishell.h"
 
-
-int main() {
-    char buf[100];
-    char *cwd = getcwd(buf, 100);
-    if (cwd == NULL) {
-        perror("getcwd() failed");
-        return 1;
-    }
-    printf("Current working directory: %s\n", cwd);
-    // free(cwd); /// This is incorrect and will lead to undefined behavior
-    return 0;
+void	handle_siginit(int sig)
+{
+	if (sig == SIGINT)
+	{
+		exit_status(1, 1);
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 02:22:19 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/29 11:22:43 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/30 12:28:03 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,39 +46,23 @@ int convert_it(char *line, t_token **head_ref)
 	return (1);
 }
 
-void	read_line(void)
+t_cmds	*read_line(void)
 {
-	while(true)
-	{
-		char* line = readline("my_bash-4.5$ ");
-		if (!line)
-			continue ;
-		t_token *tok = NULL;
-		t_cmds	*commands =NULL;
-		if (convert_it(line, &tok) == -1)
-			continue ;
-		// we enum just into " " for $
-		free(line);
-		check_for_pipe(tok);
-		enumeration(tok);
-		check_for_cmd_red_args(&tok);
-		convert_to_new_list(tok, &commands);
-		heredoc(commands);
-		// ft_open_files(commands);
-		while(commands)
-		{
-			int i = 0;
-			while(commands->data[i])
-			{
-				printf("data : %s  type : %d\n", commands->data[i], tok->type);
-				i++;
-				if (commands->data[i])
-					tok = tok->next;
-			}
-			tok = tok->next;
-			printf("----\n");
-			commands = commands ->next;
-		}
+	char* line = readline("my_bash-4.5$ ");
+	if (!line)
+		return (NULL) ;
+	t_token *tok = NULL;
+	t_cmds	*commands =NULL;
+	if (convert_it(line, &tok) == -1)
+		return (NULL) ;
+	// we enum just into " " for $
+	free(line);
+	check_for_pipe(tok);
+	enumeration(tok);
+	check_for_cmd_red_args(&tok);
+	convert_to_new_list(tok, &commands);
+	heredoc(commands);
+	ft_open_files(commands);
 	while(tok)
 	{
 		t_token *tmp = tok->next;
@@ -86,12 +70,45 @@ void	read_line(void)
 		free(tok);
 		tok = tmp;
 	}
-	}
+	return (commands);
 }
 
-int main()
+int main(int ac, char **av, char **env)
 {
-	read_line();
+	void(ac);
+	void(av);
+	(void)env;
+	flag = 0;
+	rl_catch_signals = 0;
+	if (isatty(STDIN_FILENO))
+	{
+		signal(SIGINT, handle_siginit);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	if (*env == NULL)
+	{
+		envp = make_my_own_env();
+		flag = 1;
+	}
+	else
+		envp = env_linkedlist(env);
+	while(true)
+	{
+		t_cmds *commands = read_line();
+		if (!commands)
+			continue ;
+		while(commands)
+		{
+			int i = 0;
+			while(commands->data[i])
+			{
+				printf("data : %s\n", commands->data[i]);
+				i++;
+			}
+			printf("----\n");
+			commands = commands ->next;
+		}
+	}
 }
 
 /*
