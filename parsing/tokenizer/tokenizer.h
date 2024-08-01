@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:54:25 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/29 09:19:32 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/01 09:04:36 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_token {
 
 typedef struct s_cmds
 {
+	t_token_type	type;
 	char	**data;
 	struct s_cmds	*next;
 	struct s_cmds	*prev;

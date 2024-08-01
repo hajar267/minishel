@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_list.c                                         :+:      :+:    :+:   */
+/*   store_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 03:36:57 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/29 12:58:15 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/01 09:05:58 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,22 +78,10 @@ void	convert_to_new_list(t_token *token, t_cmds **cmnd)
 	head = command;
 	while (head)
 	{
-		//if i want to open the fds directly in tokens -->
-		// if (head->type == REDIRECT_IN || head->type == REDIRECT_OUT)
-		// 	head = head->next->next;
-		// ft_open_files(head->prev);
-		if (!head)
-			break;
 		len = ft_len_args(head->data);
 		tmp = new_node(len);
 		add_node(cmnd, tmp);
 		store_data(cmnd, head);
-		i = 0;
-		while (head->data[i])
-		{
-			free(head->data[i]);
-			i++;
-		}
 		head = head->next;
 	}
 }

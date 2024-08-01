@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:51:26 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/28 11:53:58 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/31 21:06:33 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	store_data_d_quote(t_token *var, t_token **token, char *line, int i)
 				i++;
 			char *data = ft_replace(line, j, i - 1);
 			int len = ft_strlen(data);
-			printf("data : %s\n", data);
 			last->content = (char *)ft_realloc(last->content, len + var->j + 1 + var->len, var->j);
 			if (!last->content)
 				return (-1);

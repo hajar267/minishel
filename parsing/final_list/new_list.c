@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   new_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:41:41 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/14 05:38:15 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/01 09:20:52 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,22 @@ int	ft_store_data(t_token **command, t_token *token, int j, int len)
 		j = 0;
 		tmp = ft_lst_new(len);
 		to_next_node(command, tmp);
+		if (token->type == PIPE)
+			(*command)->type = PIPE;
+		else if (token->type == COMMAND)
+			(*command)->type = COMMAND;
+		else if (token->type == HEREDOC)
+			(*command)->type = HEREDOC;
+		else if (token->type == REDIRECT_IN)
+			(*command)->type = REDIRECT_IN;
+		else if (token->type == REDIRECT_OUT)
+			(*command)->type = REDIRECT_OUT;
+		else if (token->type == APPEND)
+			(*command)->type = APPEND;
+		else if (token->type == DELIMITER)
+			(*command)->type = DELIMITER;
+		else if (token->type == file)
+			(*command)->type = file;
 	}
 	last = ft_lstlast(*command);
 	last->data[j] = ft_strdup(token->content);
