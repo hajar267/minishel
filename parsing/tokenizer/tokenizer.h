@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:54:25 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/08/01 09:04:36 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/01 22:37:07 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,10 @@ void *ft_realloc(void *ptr, int new_size, int i);
 char *ft_replace(char *line, int start, int end);
 
 // handle_quotes_C
-int			check_after_s_quote(t_token *var, t_token **token ,char *line, int i);
+int	helper(t_token *var, t_token **token, char *line, int i);
 int			store_data_s_quote(t_token *var, t_token **token ,char *line, int i);
 int			store_data_d_quote(t_token *var, t_token **token ,char *line, int i);
-int			check_after_d_quote(t_token *var, t_token **token ,char *line, int i);
+int			check_after_quotes(t_token *var, t_token **token ,char *line, int i);
 //handle_characters_C
 int			store_data_characters(t_token *var, t_token **token, char *line, int i);
 int			check_after_character(t_token *var, t_token **token ,char *line, int i);

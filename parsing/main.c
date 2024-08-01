@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 02:22:19 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/08/01 08:36:25 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/01 21:30:23 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int main()
 			int i = 0;
 			while(commands->data[i])
 			{
-				printf("data : %s\n", commands->data[i]);
+				printf("data : %s  type : %d\n", commands->data[i], commands->type);
 				i++;
 			}
 			printf("----\n");

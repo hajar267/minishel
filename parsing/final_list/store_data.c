@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 03:36:57 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/08/01 09:05:58 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/01 21:31:13 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	convert_to_new_list(t_token *token, t_cmds **cmnd)
 	t_token	*command;
 	t_token	*head;
 	t_cmds	*tmp;
-	int		i;
 	int		len;
 
 	command = ft_new_list(token);
@@ -82,6 +81,7 @@ void	convert_to_new_list(t_token *token, t_cmds **cmnd)
 		tmp = new_node(len);
 		add_node(cmnd, tmp);
 		store_data(cmnd, head);
+		(*cmnd)->type = head->type;
 		head = head->next;
 	}
 }

@@ -6,7 +6,7 @@
 #    By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/04 16:05:43 by hfiqar            #+#    #+#              #
-#    Updated: 2024/07/29 13:06:23 by hfiqar           ###   ########.fr        #
+#    Updated: 2024/08/01 21:27:07 by hfiqar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ SRC = tokenizer/characters.c \
 	tokenizer/tokenizer_utils.c \
 	tokenizer/tokenizer.c \
 	syntax_error/error.c \
-	syntax_error/enum.c \
 	syntax_error/cmd_args.c \
 	main.c \
 	expander/expander_utils.c \
@@ -29,6 +28,7 @@ SRC = tokenizer/characters.c \
 	expander/heredoc_expander.c \
 	final_list/new_list.c \
 	final_list/open_files.c \
+	final_list/enum.c \
 	final_list/store_data.c 
 	
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
