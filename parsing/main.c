@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 02:22:19 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/08/01 21:30:23 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/02 21:54:11 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,18 @@ int	check_for_empty(t_token	*tokens)
 	return (1);
 }
 
+int	ft_numb_pipe(t_cmds	*cmds)
+{
+	int i = 0;
+	while (cmds)
+	{
+		if (ft_strcmp(cmds->data[0], "|") == 0)
+			i++;
+		cmds = cmds->next;
+	}
+	return (i);
+}
+
 t_cmds	*read_line(void)
 {
 	char* line = readline("my_bash-4.5$ ");
@@ -93,6 +105,8 @@ int main()
 		t_cmds *commands = read_line();
 		if (!commands)
 			continue ;
+		int p_len = ft_numb_pipe(commands);
+		printf("len : %d\n", p_len);
 		while(commands)
 		{
 			int i = 0;
