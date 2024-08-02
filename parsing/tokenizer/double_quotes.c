@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:51:26 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/08/01 22:38:24 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/02 11:42:35 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 int	ft_d_quotes_expdr(int i, t_token **last, t_token *var, char *line)
 {
-	int	j;
-	int	x;
+	int		j;
+	int		x;
+	char	*data;
 
-	if (ft_strcmp((*last)->prev->content, "<<") == 0 && \
-	ft_strlen((*last)->prev->content) == 2)
+	if ((ft_strcmp((*last)->prev->content, "<<") == 0 && \
+	ft_strlen((*last)->prev->content) == 2) || line[i + 1] == '?')
 		(*last)->content[var->j++] = line[i++];
 	else
 	{
@@ -27,7 +28,7 @@ int	ft_d_quotes_expdr(int i, t_token **last, t_token *var, char *line)
 		while(line[i] && line[i] != '$' &&(is_quote(line[i]) == 0) && \
 		(!is_separator(line[i])) && (!is_space(line[i])))
 			i++;
-		char *data = ft_replace(line, j, i - 1);
+		data = ft_replace(line, j, i - 1);
 		(*last)->content = (char *)ft_realloc((*last)->content, \
 		ft_strlen(data) + var->j + 1 + var->len, var->j);
 		if (!(*last)->content)
@@ -56,22 +57,27 @@ int	store_data_d_quote(t_token *var, t_token **token, char *line, int i)
 	last->content[var->j] = '\0';
 	if (!line[i])
 	{
-		write(2, "syntax error\n", 13);
+		write(2, "syntax error_d\n", 16);
 		return(-1);
 	}
 	i++;
-	if (check_after_quotes(var, token, line, i) == -1)
+	if (check_after_d_quote(var, token, line, i) == -1)
 		return (-1);
 	return (1);
 }
 
-int	check_after_quotes(t_token *var, t_token **token, char *line, int i)
+int	check_after_d_quote(t_token *var, t_token **token, char *line, int i)
 {
 	t_token	*tmp;
 
-	if ((is_quote(line[i]) == 1) || (is_quote(line[i]) == 2))
+	if ((is_quote(line[i]) == 1))
 	{
-		if (helper(var, token, line, i) == -1)
+		if (store_data_s_quote(var, token, line, i) == -1)
+			return (-1);
+	}
+	else if (is_quote(line[i]) == 2)
+	{
+		if (store_data_d_quote(var, token, line, i) == -1)
 			return (-1);
 	}
 	else if (is_separator(line[i]))
