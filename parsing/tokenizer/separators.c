@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:53:08 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/08/07 11:39:39 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/08 10:45:59 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	separator(t_token *var, t_token **token, char *line, int i, t_link *envp)
 	if (!line[i])
 	{
 		write(2, "my_bash: syntax error near unexpected token\n", 44);
+		exit_status(258, 1);
 		return (-1);
 	}
 	if (after_separ(var, token, line, i, envp) == -1)

@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 02:22:19 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/08/08 09:07:03 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/08 21:22:32 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	convert_it(char *line, t_token **head_ref, t_link *envp)
     t_token	*token;
     t_token	*current;
     t_token	*last;
-	t_token	*tmp;
+	// t_token	*tmp;
 
 	token = ft_tokenizer(line, envp);
 	current = NULL;
@@ -44,8 +44,8 @@ int	convert_it(char *line, t_token **head_ref, t_link *envp)
             last->next = current;
 			current->prev = last;
         }
-		tmp = token->next;
-		token = tmp;
+		token = token->next;
+		// token = tmp;
     }
 	return (1);
 }
@@ -86,14 +86,15 @@ t_cmds	*read_line(t_link *envp)
 		return (NULL);
 	if (enumeration(tok) == -1)
 		return (NULL);
-		// while(tok)
-		// {
-		// 	printf("tok : %s\n", tok->content);
-		// 	tok=tok->next;
-		// }
 	if (check_for_pipe(tok) == -1)
 		return (NULL);
 	check_for_cmd_red_args(&tok);
+	// t_token * temp = tok;
+	// while(temp)
+	// {
+	// 	printf("tmp : %s\n", temp->content);
+	// 	temp = temp->next;
+	// }
 	convert_to_new_list(tok, &commands);
 	heredoc(commands, envp);
 	if (ft_open_files(commands) == -1)

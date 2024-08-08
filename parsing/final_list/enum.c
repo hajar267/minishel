@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:16:28 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/08/07 12:55:46 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/08 10:38:11 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_token_type	ft_error(void)
 {
 	write(2, "my_bash: syntax error near unexpected token\n", 44);
+	exit_status(258, 1);
 	return (none);
 }
 

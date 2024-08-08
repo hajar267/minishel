@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:51:26 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/08/08 09:39:43 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/08 10:43:54 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	d_quote(t_token *var, t_token **token, char *line, int i, t_link *envp)
 	if (!line[i])
 	{
 		write(2, "unclosed double qoutes\n", 24);
+		exit_status(1, 1);
 		return (-1);
 	}
 	i++;

@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:46:41 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/08/07 11:06:44 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/08 10:45:34 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	s_quote(t_token *var, t_token **token, char *line, int i, t_link *envp)
 	if (!line[i])
 	{
 		write(2, "unclosed single quotes\n", 23);
+		exit_status(1, 1);
 		return (-1);
 	}
 	else

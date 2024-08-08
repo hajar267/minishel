@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 11:12:41 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/08/05 09:04:43 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/08 10:33:27 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,11 @@ char	*heredoc_expander(char *line, t_link *envp)
 		{
 			i++;
 			j = i;
-			while (line[i] && line[i] != '$' && line[i] != ' ' && (is_quote(line[i]) == 0))
+			while (line[i] && is_alphnum(line[i]) == 0)
 				i++;
-			env = ft_replace(line, j, i-1, envp);
+			if (line[j - 1] == '$' && line[i] == '?')
+				i++;
+			env = ft_replace(line, j, i, envp);
 			data = (char *)ft_realloc(data, len + x + 1 + ft_strlen(env), x);
 			int y=0;
 			while(env[y])

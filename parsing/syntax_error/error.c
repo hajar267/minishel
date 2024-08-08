@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: istili <istili@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 23:43:24 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/08/08 00:06:21 by istili           ###   ########.fr       */
+/*   Updated: 2024/08/08 10:40:47 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	check_for_pipe(t_token	*token)
 	if (head->type == Pipe)
 	{
 		write(2, "my_bash: syntax error near unexpected token\n", 44);
+		exit_status(258, 1);
 		return (-1);
 	}
 	//head->next == NULL ||
@@ -56,6 +57,7 @@ int	check_for_pipe(t_token	*token)
 		head->next->type == Pipe)))
 		{
 			write(2, "my_bash: syntax error near unexpected token\n", 44);
+			exit_status(258, 1);
 			return (-1);
 		}
 		head = head->next;

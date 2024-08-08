@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: istili <istili@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 01:18:26 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/08/08 01:20:42 by istili           ###   ########.fr       */
+/*   Updated: 2024/08/08 10:30:45 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,10 @@ char	*ft_replace(char *line, int start, int end, t_link *envp)
 	char	*content;
 	char	*data;
 	int		i;
-	int		state;
 	char	*e_status;
 
 	i = -1;
-	state = exit_status(0, 0);
-	e_status = ft_itoa(state);
+	e_status = ft_itoa(exit_status(0, 0));
 	len = end - start + 1;
 	content = ft_malloc_gab(len + 1, 0);
 	data = NULL;
@@ -46,7 +44,7 @@ char	*ft_replace(char *line, int start, int end, t_link *envp)
 		while (e_status[++i])
 			data[i] = e_status[i];
 		start++;
-		while (start <= end)
+		while (start < end)
 			data[i++] = line[start++];
 	}
 	else

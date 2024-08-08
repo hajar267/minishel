@@ -6,7 +6,7 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 08:45:03 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/08/07 13:07:27 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/08 10:40:19 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int ft_red_out(t_cmds *command)
 	if (command->fd == -1)
 	{
 		perror("my_bash: ");
-		// ft_malloc_gab(0, 1);
+		exit_status(1, 1);
 		return (-1);
 	}
 	write(command->fd,"red\n",4);
@@ -32,7 +32,7 @@ int	ft_append(t_cmds *command)
 	if (command->fd == -1)
 	{
 		perror("my_bash: ");
-		// ft_malloc_gab(0, 1);
+		exit_status(1, 1);
 		return (-1);
 	}
 	write(command->fd,"n >\n",4);
@@ -46,6 +46,7 @@ int ft_red_in(t_cmds *command)
 	if (command->fd == -1)
 	{
 		perror("my_bash: ");
+		exit_status(1, 1);
 		return (-1);
 	}
 	write(command->fd,"h",1);
