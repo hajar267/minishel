@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: istili <istili@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 14:58:11 by istili            #+#    #+#             */
-/*   Updated: 2024/07/30 12:51:09 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/08 01:20:14 by istili           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,33 +58,32 @@ int	exit_status(int new_status, int flag)
 {
 	static int	status;
 
-	status = 0;
 	if (flag)
 		status = new_status;
 	return (status);
 }
 
-char	*ft_strjoin(char *line, char *bufr)
-{
-	char	*s;
-	size_t	i;
-	size_t	j;
+// char	*ft_strjoin(char *line, char *bufr)
+// {
+// 	char	*s;
+// 	size_t	i;
+// 	size_t	j;
 
-	if (!line || !bufr)
-		return (NULL);
-	s = (char *)ft_malloc_gab(ft_strlen(line) + ft_strlen(bufr) + 1, 0);
-	i = 0;
-	while (line != NULL && line[i] != '\0')
-	{
-		s[i] = line[i];
-		i++;
-	}
-	j = 0;
-	while (bufr != 0 && bufr[j] != '\0')
-	{
-		s[i + j] = bufr[j];
-		j++;
-	}
-	s[i + j] = '\0';
-	return (s);
-}
+// 	if (!line || !bufr)
+// 		return (NULL);
+// 	s = (char *)ft_malloc_gab(ft_strlen(line) + ft_strlen(bufr) + 1, 0);
+// 	i = 0;
+// 	while (line != NULL && line[i] != '\0')
+// 	{
+// 		s[i] = line[i];
+// 		i++;
+// 	}
+// 	j = 0;
+// 	while (bufr != 0 && bufr[j] != '\0')
+// 	{
+// 		s[i + j] = bufr[j];
+// 		j++;
+// 	}
+// 	s[i + j] = '\0';
+// 	return (s);
+// }

@@ -3,64 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: istili <istili@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 01:18:26 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/29 12:56:24 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/08 01:20:42 by istili           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // realloc function
-#include "../tokenizer/tokenizer.h"
-#include<string.h>
+#include "../../minishell.h"
 
-void	*ft_memcpy(void	*dst, const	void *src, size_t n )
+void	*ft_realloc(void *ptr, int new_size, int len)
 {
-	unsigned char	*str;
-	unsigned char	*str1;
-	size_t			i;
+	void	*new_ptr;
 
-	if (dst == NULL && src == NULL)
-		return (NULL);
-	str = (unsigned char *)dst;
-	str1 = (unsigned char *)src;
-	i = 0;
-	while (n > i)
-	{
-		str[i] = str1[i];
-		i++;
-	}
-	return ((void *)str);
-}
-
-void *ft_realloc(void *ptr, int new_size, int len) // i  can add a 3eme arg to realloc  --> the len of data --> ptr
-{
+	new_ptr = NULL;
     if (ptr == NULL)
-        return (malloc(new_size));
-    void *new_ptr = malloc(new_size);
-    if (new_ptr == NULL)
-        return (NULL);
-	// printf("size : %d\n", new_size);
+        return (ft_malloc_gab(new_size, 0));
+    new_ptr = ft_malloc_gab(new_size, 0);
     ft_memcpy(new_ptr, ptr, len);
-    free(ptr);
     return (new_ptr);
 }
 
-//function that get the origin value of $ and return it
-char *ft_replace(char *line, int start, int end)
+char	*ft_replace(char *line, int start, int end, t_link *envp)
 {
-	int len = end - start + 1;
-	char *content = malloc(len + 1);
-	if (!content)
-		return(NULL);
-	int i = 0;
-	while(start <= end)
-		content[i++] = line[start++];
-	content[i] = '\0';
-	// printf("content : %s\n", content);
-	char *data = getenv(content);
+	int		len;
+	char	*content;
+	char	*data;
+	int		i;
+	int		state;
+	char	*e_status;
+
+	i = -1;
+	state = exit_status(0, 0);
+	e_status = ft_itoa(state);
+	len = end - start + 1;
+	content = ft_malloc_gab(len + 1, 0);
+	data = NULL;
+	if (line[start] == '?')
+	{
+		data = ft_malloc_gab(len + 4, 0);
+		while (e_status[++i])
+			data[i] = e_status[i];
+		start++;
+		while (start <= end)
+			data[i++] = line[start++];
+	}
+	else
+	{
+		while(start <= end)
+			content[++i] = line[start++];
+		content[i] = '\0';
+		data = find_val(envp, content);
+	}
 	if (!data)
 		return (ft_strdup(""));
-	free (content);
 	return (data);
 }

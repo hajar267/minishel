@@ -6,11 +6,11 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:41:41 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/08/01 09:20:52 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/07 12:22:56 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../tokenizer/tokenizer.h"
+#include "../../minishell.h"
 
 int	ft_len_args(char **str)
 {
@@ -41,12 +41,8 @@ t_token	*ft_lst_new(int len)
 {
 	t_token	*command;
 
-	command = malloc(sizeof(t_token));
-	if (!command)
-		return (NULL);
-	command->data = malloc(sizeof(char *) * (len + 1));
-	if (!command->data)
-		return (NULL);
+	command = ft_malloc_gab(sizeof(t_token), 0);
+	command->data = ft_malloc_gab(sizeof(char *) * (len + 1), 0);
 	command->next = NULL;
 	command->prev = NULL;
 	return (command);
@@ -58,28 +54,13 @@ int	ft_store_data(t_token **command, t_token *token, int j, int len)
 	t_token	*last;
 
 	tmp = NULL;
-	if (!token->prev || ft_red(token->content) || token->type == PIPE || \
-	ft_red(token->prev->content) || token->prev->type == PIPE)
+	if (!token->prev || ft_red(token) || token->type == Pipe || \
+	ft_red(token->prev) || token->prev->type == Pipe)
 	{
 		j = 0;
 		tmp = ft_lst_new(len);
 		to_next_node(command, tmp);
-		if (token->type == PIPE)
-			(*command)->type = PIPE;
-		else if (token->type == COMMAND)
-			(*command)->type = COMMAND;
-		else if (token->type == HEREDOC)
-			(*command)->type = HEREDOC;
-		else if (token->type == REDIRECT_IN)
-			(*command)->type = REDIRECT_IN;
-		else if (token->type == REDIRECT_OUT)
-			(*command)->type = REDIRECT_OUT;
-		else if (token->type == APPEND)
-			(*command)->type = APPEND;
-		else if (token->type == DELIMITER)
-			(*command)->type = DELIMITER;
-		else if (token->type == file)
-			(*command)->type = file;
+		final_enum(token, command);
 	}
 	last = ft_lstlast(*command);
 	last->data[j] = ft_strdup(token->content);
@@ -101,9 +82,9 @@ t_token	*ft_new_list(t_token *token)
 	while (head)
 	{
 		j = ft_store_data(&command, head, j, len);
-		if (head->next == NULL || head->next->type == PIPE || \
-		ft_red(head->next->content) || head->type == PIPE || \
-		ft_red(head->content))
+		if (head->next == NULL || head->next->type == Pipe || \
+		ft_red(head->next) || head->type == Pipe || \
+		ft_red(head))
 		{
 			lst = ft_lstlast(command);
 			lst->data[j + 1] = NULL;

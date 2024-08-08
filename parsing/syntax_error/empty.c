@@ -1,30 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   empty.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/11 12:15:44 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/30 11:23:41 by hfiqar           ###   ########.fr       */
+/*   Created: 2024/08/03 11:59:49 by hfiqar            #+#    #+#             */
+/*   Updated: 2024/08/03 12:01:02 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-
-int main() {
-    char buf[100];
-    char *cwd = getcwd(buf, 100);
-    if (cwd == NULL) {
-        perror("getcwd() failed");
-        return 1;
-    }
-    printf("Current working directory: %s\n", cwd);
-    // free(cwd); /// This is incorrect and will lead to undefined behavior
-    return 0;
-}
+#include "../../minishell.h"

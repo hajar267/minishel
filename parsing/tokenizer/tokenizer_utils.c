@@ -6,11 +6,11 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:38:30 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/14 04:53:53 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/31 12:12:19 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
+#include "../../minishell.h"
 
 int	is_quote(int c)
 {
@@ -43,12 +43,12 @@ bool	is_character(int c)
 	return (false);
 }
 
-int	ft_strlen(const char *str)
-{
-	int	i;
+// int	ft_strlen(const char *str)
+// {
+// 	int	i;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	while (str[i])
+// 		i++;
+// 	return (i);
+// }

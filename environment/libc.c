@@ -6,21 +6,21 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 14:58:51 by istili            #+#    #+#             */
-/*   Updated: 2024/07/30 12:53:30 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/31 12:17:20 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_strcmp(char *s1, char *s2)
-{
-	while (*s1 && *s2 && *s1 == *s2)
-	{
-		s1++;
-		s2++;
-	}
-	return ((unsigned int)*s1 - (unsigned int)*s2);
-}
+// int	ft_strcmp(char *s1, char *s2)
+// {
+// 	while (*s1 && *s2 && *s1 == *s2)
+// 	{
+// 		s1++;
+// 		s2++;
+// 	}
+// 	return ((unsigned int)*s1 - (unsigned int)*s2);
+// }
 
 int	ft_strlen(const char *s)
 {
@@ -32,21 +32,21 @@ int	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strchr(char *s, int c)
-{
-	int	i;
+// char	*ft_strchr(char *s, int c)
+// {
+// 	int	i;
 
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
-		i++;
-	}
-	if ((char)c == '\0')
-		return ((char *)&s[i]);
-	return (0);
-}
+// 	i = 0;
+// 	while (s[i])
+// 	{
+// 		if (s[i] == (char)c)
+// 			return ((char *)&s[i]);
+// 		i++;
+// 	}
+// 	if ((char)c == '\0')
+// 		return ((char *)&s[i]);
+// 	return (0);
+// }
 
 static size_t	ft_strlcpy(char *dst, char *src, size_t dstsize)
 {

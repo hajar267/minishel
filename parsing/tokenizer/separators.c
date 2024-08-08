@@ -6,13 +6,13 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 10:53:08 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/28 09:55:15 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/07 11:39:39 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
+#include "../../minishell.h"
 
-int	store_data_separator(t_token *var, t_token **token, char *line, int i)
+int	separator(t_token *var, t_token **token, char *line, int i, t_link *envp)
 {
 	t_token	*last;
 
@@ -22,21 +22,21 @@ int	store_data_separator(t_token *var, t_token **token, char *line, int i)
 	last->content[var->j] = '\0';
 	if (!line[i])
 	{
-		write(2, "syntax error!\n", 14);
+		write(2, "my_bash: syntax error near unexpected token\n", 44);
 		return (-1);
 	}
-	if (check_after_separator(var, token, line, i) == -1)
+	if (after_separ(var, token, line, i, envp) == -1)
 		return (-1);
 	return (1);
 }
 
-int	check_after_separator(t_token *var, t_token **token, char *line, int i)
+int	after_separ(t_token *var, t_token **token, char *line, int i, t_link *envp)
 {
 	t_token	*tmp;
 
 	if (is_space(line[i]))
 	{
-		if (handle_white_space(var, token, line, i) == -1)
+		if (spaces(var, token, line, i, envp) == -1)
 			return (-1);
 	}
 	else
@@ -45,17 +45,17 @@ int	check_after_separator(t_token *var, t_token **token, char *line, int i)
 		to_next_node(token, tmp);
 		if (is_quote(line[i]) == 1)
 		{
-			if (store_data_s_quote(var, token, line, i) == -1)
+			if (s_quote(var, token, line, i, envp) == -1)
 				return (-1);
 		}
 		else if (is_quote(line[i]) == 2)
 		{
-			if (store_data_d_quote(var, token, line, i) == -1)
+			if (d_quote(var, token, line, i, envp) == -1)
 				return (-1);
 		}
 		else if (is_character(line[i]))
 		{
-			if (store_data_characters(var, token, line, i) == -1)
+			if (characters(var, token, line, i, envp) == -1)
 				return (-1);
 		}
 	}

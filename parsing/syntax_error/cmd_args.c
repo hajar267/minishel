@@ -6,11 +6,11 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 11:06:01 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/07/14 05:47:24 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/31 12:12:19 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../tokenizer/tokenizer.h"
+#include "../../minishell.h"
 
 void	check_for_cmd_red_args(t_token **token)
 {
@@ -23,7 +23,7 @@ void	check_for_cmd_red_args(t_token **token)
 	{
 		first = head;
 		second = head->next;
-		while (head && head->type != PIPE)
+		while (head && head->type != Pipe)
 		{
 			if (head->type == ARG && head->prev->type == file)
 			{
@@ -46,7 +46,7 @@ void	check_for_cmd_red_args(t_token **token)
 // 	while (head)
 // 	{
 // 		t_token	*first = head;
-// 		while (head && head->type != PIPE)
+// 		while (head && head->type != Pipe)
 // 		{
 			// if (head->type == ARG && first->type != ARG && \
 			// first->type != COMMAND)

@@ -6,11 +6,11 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 22:21:38 by istili            #+#    #+#             */
-/*   Updated: 2024/07/30 12:31:08 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/07/31 12:13:11 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static void	add_gab(void *ptr, t_list *som)
 {

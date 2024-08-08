@@ -6,11 +6,11 @@
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 03:36:57 by hfiqar            #+#    #+#             */
-/*   Updated: 2024/08/01 21:31:13 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/05 19:41:02 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../tokenizer/tokenizer.h"
+#include "../../minishell.h"
 
 t_cmds	*last_node(t_cmds *data)
 {
@@ -21,7 +21,7 @@ t_cmds	*last_node(t_cmds *data)
 	return (data);
 }
 
-void	add_node(t_cmds **token, t_cmds *data)
+void	add_nod(t_cmds **token, t_cmds *data)
 {
 	t_cmds	*nod;
 
@@ -36,18 +36,15 @@ void	add_node(t_cmds **token, t_cmds *data)
 	data->next = NULL;
 }
 
-t_cmds	*new_node(int i)
+t_cmds	*new_node(int i, t_token *head)
 {
 	t_cmds	*node;
 
-	node = malloc(sizeof(t_cmds));
-	if (!node)
-		return (NULL);
-	node->data = malloc(sizeof(char *) * (i + 1));
-	if (!node->data)
-		return (NULL);
+	node = ft_malloc_gab(sizeof(t_cmds), 0);
+	node->data = ft_malloc_gab(sizeof(char *) * (i + 1), 0);
 	node->next = NULL;
 	node->prev = NULL;
+	node->type = head->type;
 	return (node);
 }
 
@@ -78,10 +75,9 @@ void	convert_to_new_list(t_token *token, t_cmds **cmnd)
 	while (head)
 	{
 		len = ft_len_args(head->data);
-		tmp = new_node(len);
-		add_node(cmnd, tmp);
+		tmp = new_node(len, head);
+		add_nod(cmnd, tmp);
 		store_data(cmnd, head);
-		(*cmnd)->type = head->type;
 		head = head->next;
 	}
 }

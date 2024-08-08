@@ -1,25 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   export_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/14 01:15:02 by istili            #+#    #+#             */
-/*   Updated: 2024/07/30 12:30:32 by hfiqar           ###   ########.fr       */
+/*   Created: 2024/08/03 12:14:37 by hfiqar            #+#    #+#             */
+/*   Updated: 2024/08/03 12:15:42 by hfiqar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
-void	handle_siginit(int sig)
-{
-	if (sig == SIGINT)
-	{
-		exit_status(1, 1);
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
+//bash: export: `k+m=p': not a valid identifier
+//bash: export: `$var=l': not a valid identifier
+//

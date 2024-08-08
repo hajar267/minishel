@@ -1,0 +1,114 @@
+my_bash-4.5$ export $a=$a
+my_bash-4.5$ exit
+it needs to prompt the error code
+--> (bash: export: `=': not a valid identifier)
+
+-------
+
+export var=te""st
+-> my bash:
+declare -x var=test
+my_bash-4.5$ echo $var
+my_bash-4.5$ exit
+-> bash:
+declare -x var="test"
+bash-3.2$ echo $var
+test
+(exit instead of exporting var)
+
+
+# env -i ./minishell
+# -> my_bash
+# my_bash-4.5$ echo $SHLVL
+# my_bash-4.5$ exit
+# -> bash
+# bash-3.2$ echo $SHLVL
+# 1
+
+
+# my_bash-4.5$ ""
+# -> my_bash-4.5$ exit
+# -> bash: : command not found
+
+
+echo $USER$var\$USER$USER\$USERtest$USER
+-> my bash : istiliistiliistili
+-> bash $USER$USERtest
+
+
+# export "test=ici"=coco
+# my_bash-4.5$ echo $test
+# my_bash-4.5$ exit
+# -> bash-3.2$
+# bash-3.2$ echo $test
+# ici=coco
+
+
+# export var=" truc"
+# my_bash-4.5$ echo $var
+# my_bash-4.5$ exit
+# bash-3.2$ echo $var
+# truc
+
+# 'non-export' -> bla & lala & var
+# my_bash-4.5$ echo $bla
+# my_bash-4.5$ exit
+# bash-3.2$ echo $bla
+# '\n'
+# -------
+# my_bash-4.5$ echo $lala bonjour
+# my_bash-4.5$ exit
+# bash-3.2$ echo $lala bonjour
+# bonjour
+# -------
+# my_bash-4.5$ export $var
+# my_bash-4.5$ exit
+# bash-3.2$ export $var
+# prints out export
+
+
+--------
+
+--------
+
+--------
+
+--------
+
+export loop='hello$loop'
+echo $loop
+my_bash-4.5$ exit
+bash prints : hello$loop
+
+
+
+pipe alone : |
+syntax error!
+my_bash-4.5$ exit
+bash: syntax error near unexpected token `|'
+
+
+unset PATH
+echo $PATH
+my bash : /Users/istili/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/istili/.brew/bin
+bash : '\n'
+
+
+echo $USER+-=-=-=-=$USER
+data : echo
+data : istili
+bash-3.2$ echo $USER+-=-=-=-=$USER
+istili+-=-=-=-=istili
+
+
+my_bash-4.5$ 
+data : 
+---------------------
+fd_redir: 0
+fd_heredoc: 0
+-------------------------
+my_bash-4.5$ ""
+data : 
+
+It should not be treated as the same string. In bash, empty command does nothing just prompts a new line, but "" command should print command not found, in our case both prints command not found.
+(Even if we print every non-builtin command as a command not found, if we have a string between quotes, it should print command not found, but if the string isn't between quotes it should print nothing)

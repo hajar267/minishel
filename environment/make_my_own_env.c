@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_my_own_env.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfiqar <hfiqar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: istili <istili@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:20:28 by istili            #+#    #+#             */
-/*   Updated: 2024/07/30 12:34:42 by hfiqar           ###   ########.fr       */
+/*   Updated: 2024/08/08 01:01:33 by istili           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ t_link	*make_my_own_env(void)
 	add_node(linkedlist, make_pair_env("SHLVL", "1"));
 	add_node(linkedlist, make_pair_env("_", "/usr/bin/env"));
 	add_node(linkedlist, make_pair_env("OLDPWD", NULL));
+	add_node(linkedlist, make_pair_env("PATH", "/Users/istili/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/istili/.brew/bin"));
 	return (linkedlist);
 }
